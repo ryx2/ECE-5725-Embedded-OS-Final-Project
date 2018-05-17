@@ -57,6 +57,7 @@ def mic(): # microphone capture thread
         # Read data from device
         flag,data = inp.read()
         try:
+            captureTime = time.time()
             samps = np.frombuffer(data,dtype = np.int16)
             if len(sArr)+len(samps) > sr*secondsKept:
                 sArr = np.delete(sArr,np.arange(len(sArr)+len(samps)-sr*secondsKept),0)
@@ -99,7 +100,8 @@ def beatDetect(): #beat detection thread
             time.sleep(0.02)
 
 def howLong(space): #space is the number of beats tat we are trying to wait
-    lastBeatTime = lastCap + beats[-1] #the time the last beat occured, in absolute time
+    global sr
+    lastBeatTime = lastCap  - (len(sArr)-1000)/sr + beats[-1] #the time the last beat occured, in absolute time
     curTime = time.time()
     timeToWait = curTime - lastBeatTime #the before the current time that the last beat is
     print('orig time to wait is ' + str(timeToWait))
