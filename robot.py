@@ -98,8 +98,6 @@ def beatDetect(): #beat detection thread
         else:
             time.sleep(0.02)
 
-toggle = True
-timesCalled = np.array([])
 def howLong(space): #space is the number of beats tat we are trying to wait
     lastBeatTime = lastCap + beats[-1] #the time the last beat occured, in absolute time
     curTime = time.time()
